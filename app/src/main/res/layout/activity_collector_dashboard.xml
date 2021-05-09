@@ -153,6 +153,7 @@ tools:context=".collector_dashboard">
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/collector_checkproduct"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_column="0"
@@ -176,7 +177,7 @@ tools:context=".collector_dashboard">
                 android:layout_height="match_parent"
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center"
-                android:text="Notification"
+                android:text="CheckProduct"
                 android:textAlignment="center"
                 android:textStyle="bold" />
         </LinearLayout>

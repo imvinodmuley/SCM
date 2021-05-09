@@ -14,7 +14,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Dapp"
         android:usesCleartextTraffic="true">
-        <activity android:name=".display_collector_product"></activity>
+        <activity
+            android:name=".rewardfine"
+            android:label="@string/title_activity_rewardfine"
+            android:theme="@style/Theme.Dapp.NoActionBar"></activity>
+        <activity android:name=".checkproduct" />
+        <activity android:name=".display_collector_product" />
         <activity android:name=".display_product_info" />
         <activity android:name=".displayqr" />
         <activity android:name=".collector_dashboard" />

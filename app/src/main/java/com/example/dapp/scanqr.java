@@ -1,6 +1,7 @@
 package com.example.dapp;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.os.Build;
@@ -15,6 +16,8 @@ import com.google.zxing.Result;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.concurrent.ExecutionException;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
@@ -131,25 +134,50 @@ public class scanqr extends AppCompatActivity implements ZXingScannerView.Result
     public void handleResult(Result result) {
         String myResult = result.getText();
         String tempcustomermobileno=MainActivity.customermob;
-        Toast.makeText(getApplicationContext(),myResult, Toast.LENGTH_LONG).show();
+        int countword=myResult.length();
+        if(countword>10) {
+            try {
+                JSONObject obj = new JSONObject(myResult);
+                String product_id=obj.getString("product_id");
+                String product_name=obj.getString("product_name");
+                String manufacture_date=obj.getString("manufacture_date");
+
+                String customermobileno=tempcustomermobileno;
+
+                new backgroundprocess(this).execute("3",customermobileno,product_id,product_name,manufacture_date);
 
 
-        try {
-            JSONObject obj = new JSONObject(myResult);
-            String product_id=obj.getString("product_id");
-            String product_name=obj.getString("product_name");
-            String manufacture_date=obj.getString("manufacture_date");
 
-            String customermobileno=tempcustomermobileno;
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
-            new backgroundprocess(this).execute("3",customermobileno,product_id,product_name,manufacture_date);
-
-
-
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
-
+        else {
+            this.finish();
+            MainActivity.rewardcustomermob=myResult;
+            Toast.makeText(getApplicationContext(),myResult, Toast.LENGTH_LONG).show();
+            String fine= "finrn";
+            try {
+                fine = new backgroundprocess(this).execute("10",myResult).get();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            String reward= "finrn";
+            try {
+                reward = new backgroundprocess(this).execute("11",myResult).get();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            MainActivity.rewardcount=reward;
+            MainActivity.finecount=fine;
+            Intent i=new Intent(this,rewardfine.class);
+            startActivity(i);
+        }
     }
 }
 

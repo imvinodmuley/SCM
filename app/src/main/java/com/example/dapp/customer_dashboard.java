@@ -24,13 +24,13 @@ import java.util.concurrent.ExecutionException;
 public class customer_dashboard extends AppCompatActivity {
     public static String result_display_product;
     String resulti;
-    CardView cpbtn,crbtn,cfbtn;
+    CardView cpbtn,crbtn,cfbtn,cnbtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_dashboard);
 
-        notification();
+       // notification();
 
         cpbtn=(CardView)findViewById(R.id.products_info);
         cpbtn.setOnClickListener(new View.OnClickListener() {
@@ -52,6 +52,14 @@ public class customer_dashboard extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 start_display_fine_product_info();
+            }
+        });
+
+        cnbtn=(CardView)findViewById(R.id.customer_checkproduct);
+        cnbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkproductstatus();
             }
         });
 
@@ -194,4 +202,13 @@ public class customer_dashboard extends AppCompatActivity {
 
 
     }
+    public void checkproductstatus()
+    {
+        Intent i=new Intent(this,checkproduct.class);
+        startActivity(i);
+        //new backgroundprocess(this).execute("8","name","pass");
+    }
+
+
+
 }

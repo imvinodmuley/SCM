@@ -39,6 +39,40 @@ public class registration extends AppCompatActivity {
             }
         });
             }
+
+
+
+    private boolean isvalidemobilepassword(String password,String mobile_no,String email,String name)
+    {
+        if(mobile_no.equals(""))
+        {
+            Toast toast = Toast.makeText(this, "Enter mobile no", Toast.LENGTH_SHORT);
+            toast.show();
+            return false;
+        }
+        if(password.equals(""))
+        {
+            Toast toast = Toast.makeText(this, "Enter password", Toast.LENGTH_SHORT);
+            toast.show();
+            return false;
+        }
+        if(email.equals(""))
+        {
+            Toast toast = Toast.makeText(this, "Enter email", Toast.LENGTH_SHORT);
+            toast.show();
+            return false;
+        }
+        if(name.equals(""))
+        {
+            Toast toast = Toast.makeText(this, "Enter name", Toast.LENGTH_SHORT);
+            toast.show();
+            return false;
+        }
+
+
+        return true;
+    }
+
     public void register() {
 
                 String password=passwordfield.getText().toString();
@@ -64,14 +98,22 @@ public class registration extends AppCompatActivity {
                 {
                     role="4";
                 }
-//
-//
+
 //                String data=username+password+mobile_no+email+name+role;
-        Toast.makeText(getApplicationContext(), role, Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(), role, Toast.LENGTH_LONG).show();
+
+            if(isvalidemobilepassword(password,mobile_no,email,name)) {
 
                 new backgroundprocess(this).execute("2",password,mobile_no,email,name,role);
+                this.finish();
 
             }
+            else
+            {
+                this.finish();
+                this.startActivity(new Intent(this,registration.class));
+            }
+    }
 
     private void openMainActivity() {
         Intent i =new Intent(this,MainActivity.class);

@@ -16,7 +16,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class display_collector_product extends AppCompatActivity {
+public class
+display_collector_product extends AppCompatActivity {
 
     List<Product> productList;
     RecyclerView recyclerView;

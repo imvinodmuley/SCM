@@ -8,10 +8,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
 
     public static String customermob="";
+    public static String rewardcount="";
+    public static String finecount="";
+    public static String rewardcustomermob="";
     Button login_button;
     Button register_button;
     EditText usernamefield,passwordfield;
@@ -29,8 +35,8 @@ public class MainActivity extends AppCompatActivity {
         login_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                login();
-//                opendashboardactivity();
+//                login();
+                opendashboardactivity();
             }
         });
 
@@ -44,24 +50,54 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private boolean isvalidemobilepassword(String mobileno,String pass)
+    {
+        if(mobileno.equals(""))
+        {
+            Toast toast = Toast.makeText(this, "Enter mobile no", Toast.LENGTH_SHORT);
+            toast.show();
+            return false;
+        }
+        if(pass.equals(""))
+        {
+            Toast toast = Toast.makeText(this, "Enter password", Toast.LENGTH_SHORT);
+            toast.show();
+            return false;
+        }
+        if(mobileno.equals("")&&pass.equals(""))
+        {
+            Toast toast = Toast.makeText(this, "Enter mobile no and Password", Toast.LENGTH_SHORT);
+            toast.show();
+            return false;
+        }
+        return true;
+    }
+
     private void login()
     {
         String name=usernamefield.getText().toString();
         customermob=name;
         String pass=passwordfield.getText().toString();
-        this.finish();
-        //new backgroundprocess(this).execute("1",name,pass);
 
+        if(isvalidemobilepassword(name,pass)) {
+            this.finish();
+            new backgroundprocess(this).execute("1", name, pass);
+
+
+        }
+        else {
+            this.finish();
+            this.startActivity(new Intent(this,MainActivity.class));
+
+        }
     }
 
 
+
+
     private void opendashboardactivity() {
-
-
-        Intent i =new Intent(this, customer_dashboard.class);
+        Intent i =new Intent(this, collector_dashboard.class);
         startActivity(i);
-
-
     }
 
     public  void reg(View view)
@@ -70,10 +106,8 @@ public class MainActivity extends AppCompatActivity {
         Intent i =new Intent(this,registration.class);
         startActivity(i);
     }
-    
 
 
-//    private void openregisteractivity(View view) {
-//
-//    }
+
+
 }

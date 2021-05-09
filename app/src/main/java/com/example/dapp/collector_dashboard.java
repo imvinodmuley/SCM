@@ -11,7 +11,7 @@ import android.widget.Toast;
 import java.util.concurrent.ExecutionException;
 
 public class collector_dashboard extends AppCompatActivity {
-    CardView cpbtn,crbtn,cfbtn;
+    CardView cpbtn,crbtn,cfbtn,cnbtn;
     public static String result_display_product;
 
     @Override
@@ -39,6 +39,14 @@ public class collector_dashboard extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 start_display_fine_product_info();
+            }
+        });
+
+        cnbtn=(CardView)findViewById(R.id.collector_checkproduct);
+        cnbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkproductstatus();
             }
         });
 
@@ -118,5 +126,29 @@ public class collector_dashboard extends AppCompatActivity {
 
         Intent i=new Intent(this,display_collector_product.class);
         startActivity(i);
+    }
+
+    public void checkproductstatus()
+    {
+        Intent i=new Intent(this,checkproduct.class);
+        startActivity(i);
+        //new backgroundprocess(this).execute("8","name","pass");
+    }
+
+    public String getfinecount()
+    {
+        String result=MainActivity.finecount;
+        return result;
+    }
+
+    public String getrewardcount()
+    {
+        String result=MainActivity.rewardcount;
+        return result;
+    }
+
+    public void setamount(String amount,String direction)
+    {
+        new backgroundprocess(this).execute("12", MainActivity.rewardcustomermob,amount,direction);
     }
 }
